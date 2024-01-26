@@ -1,3 +1,6 @@
+import { prisma } from "@/lib/prisma";
+import { User } from "@prisma/client";
+import { compare } from "bcrypt";
 import { NextAuthOptions } from "next-auth";
 import NextAuth from "next-auth/next";
 import CredentialsProvider from "next-auth/providers/credentials";
@@ -14,16 +17,55 @@ export const authOptions: NextAuthOptions = {
                 password: { label: "Password", type: "password" }
             },
             async authorize(credentials, req) {
-                const user = { id: "1", name: "J Smith", email: "jsmith@example.com" }
-
-                if (user) {
-                    return user
-                } else {
+                if (!credentials?.email || !credentials?.password) {
                     return null
+                }
+
+                const user = await prisma.user.findUnique({
+                    where: {
+                        email: credentials.email,
+                    }
+                })
+
+                if (!user) {
+                    return null
+                }
+
+                const isPasswordValid = await compare(credentials.password, user.password)
+
+                if (!isPasswordValid) {
+                    return null
+                }
+
+                return {
+                    id: user.id + "",
+                    email: user.email,
+                    name: user.name,
                 }
             }
         })
-    ]
+    ],
+    callbacks: {
+        session: ({ session, token }) => {
+            return {
+                ...session,
+                key: token.id,
+                email: token.email,
+            }
+        },
+        jwt: ({ token, user }) => {
+            if (user) {
+                const u = user as unknown as User
+                return {
+                    ...token,
+                    id: u.id,
+                    email: u.email,
+                    name: u.name,
+                }
+            }
+            return token
+        }
+    }
 }
 
 const handler = NextAuth(authOptions)
