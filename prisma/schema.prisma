@@ -19,7 +19,8 @@ datasource db {
 // }
 
 model Organizer {
-  id       Int     @id @default(autoincrement())
+  id       String     @id @default(uuid())
+  orgName  String  @unique
   name     String
   username String  @unique
   password String
@@ -37,7 +38,7 @@ model Event {
   duration         Int                @default(30)
   location         String             @default("College")
   Organizer        Organizer?         @relation(fields: [organizerId], references: [id])
-  organizerId      Int?
+  organizerId      String?
   regFees          Float              @default(100)
   EventParticipant EventParticipant[]
 }

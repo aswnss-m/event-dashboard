@@ -17,7 +17,8 @@ async function main() {
         create:{
             username : "testorg",
             password,
-            name:"test org",
+            orgName : "testorg",
+            name:"John Doe",
             email:"testorg@gmail.com",
             phone:"1234567890",
         }

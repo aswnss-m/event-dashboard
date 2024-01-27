@@ -53,11 +53,15 @@ export default async function Dashboard() {
     const totalPartipants = events.reduce((acc, event) => acc + event.participants, 0)
     const totalRevenue = events.reduce((x, event) => x + (event.cost * event.participants), 0)
     const session = await getServerAuthSession()
+    if (!session) {
+        return null
+    }
+
     return (
         <div className="flex flex-col gap-5">
             <div className="flex justify-between items-center">
                 <h1 className="text-2xl lg:text-3xl font-bold">
-                    Welcome {user.contactName}
+                    Welcome {session.user?.name}
                 </h1>
                 <Link href={'/newevent'}>
                     <Button>

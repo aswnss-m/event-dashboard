@@ -54,8 +54,9 @@ export const authOptions : NextAuthOptions = {
         session: ({ session, token }) => {
             return {
                 ...session,
-                key: token.id,
+                orgId: token.id,
                 email: token.email,
+                orgName : token.orgName,
             }
         },
         jwt: ({ token, user }) => {
@@ -66,6 +67,7 @@ export const authOptions : NextAuthOptions = {
                     id: u.id,
                     email: u.email,
                     name: u.name,
+                    orgName : u.orgName,
                 }
             }
             return token
