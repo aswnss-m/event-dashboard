@@ -13,9 +13,9 @@ export const eventSchema = z.object({
 })
 
 export const loginSchema = z.object({
-    username: z.string(),
+    email: z.string().includes("@"),
     password: z.string()
 }).required({
-    username: true,
+    email: true,
     password: true,
 })
