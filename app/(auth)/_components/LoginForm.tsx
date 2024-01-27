@@ -37,7 +37,7 @@ export default function LoginForm() {
                                         type="text"
                                         required />
                                 </FormControl>
-                                <FormMessage className="text-red-500" />
+                                <FormMessage />
                             </FormItem>
                         )
                     }} />
@@ -52,7 +52,7 @@ export default function LoginForm() {
                                         type="password"
                                         required />
                                 </FormControl>
-                                <FormMessage className="text-red-500" />
+                                <FormMessage />
                             </FormItem>
                         )
                     }} />
