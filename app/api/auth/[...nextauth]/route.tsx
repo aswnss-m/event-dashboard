@@ -1,5 +1,5 @@
 import { prisma } from "@/lib/prisma";
-import { User } from "@prisma/client";
+import { Organizer } from "@prisma/client";
 import { compare } from "bcrypt";
 import { NextAuthOptions } from "next-auth";
 import NextAuth from "next-auth/next";
@@ -16,34 +16,33 @@ export const authOptions: NextAuthOptions = {
         CredentialsProvider({
             name: "credentials",
             credentials: {
-                email: { label: "email", type: "email", placeholder: "johndoe@gmail.com" },
+                username: { label: "username", type: "string", placeholder: "johndoe" },
                 password: { label: "Password", type: "password" }
             },
             async authorize(credentials, req) {
-                if (!credentials?.email || !credentials?.password) {
+                if (!credentials?.username || !credentials?.password) {
                     return null
                 }
 
-                const user = await prisma.user.findUnique({
+                const org = await prisma.organizer.findUnique({
                     where: {
-                        email: credentials.email,
+                        username: credentials.username,
                     }
                 })
-
-                if (!user) {
+                if (!org) {
                     return null
                 }
 
-                const isPasswordValid = await compare(credentials.password, user.password)
+                const isPasswordValid = await compare(credentials.password, org.password)
 
                 if (!isPasswordValid) {
                     return null
                 }
 
                 return {
-                    id: user.id + "",
-                    email: user.email,
-                    name: user.name,
+                    id: org.id + "",
+                    email: org.email,
+                    name: org.name,
                 }
             }
         })
@@ -58,7 +57,7 @@ export const authOptions: NextAuthOptions = {
         },
         jwt: ({ token, user }) => {
             if (user) {
-                const u = user as unknown as User
+                const u = user as unknown as Organizer
                 return {
                     ...token,
                     id: u.id,

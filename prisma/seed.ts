@@ -9,20 +9,6 @@ const prisma = new PrismaClient();
 
 async function main() {
     const password = await hash("password",12)
-    const user = await prisma.user.upsert({
-        where:{
-            email:"test@gmail.com"
-        },
-        update:{},
-        create:{
-            email:"test@gmail.com",
-            username : "test",
-            password,
-            name:"John Doe"
-        },
-    })
-    console.log("user created")
-
     const org = await prisma.organizer.upsert({
         where :{
             username : "testorg"

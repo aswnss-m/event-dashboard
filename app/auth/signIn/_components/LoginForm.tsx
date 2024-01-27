@@ -15,14 +15,14 @@ export default function LoginForm() {
     const form = useForm<z.infer<typeof loginSchema>>({
         resolver: zodResolver(loginSchema),
         defaultValues: {
-            email: undefined,
+            username: undefined,
             password: undefined,
         },
     })
 
     const handleLogin = async () => {
         await signIn("credentials", {
-            email: form.getValues("email"),
+            username: form.getValues("username"),
             password: form.getValues("password"),
             callbackUrl: "/",
             redirect: true,
@@ -34,15 +34,15 @@ export default function LoginForm() {
             <Separator className="my-7" />
             <Form {...form}>
                 <form onSubmit={form.handleSubmit(handleLogin)} className="space-y-8">
-                    <FormField control={form.control} name="email" render={({ field }) => {
+                    <FormField control={form.control} name="username" render={({ field }) => {
                         return (
                             <FormItem>
-                                <FormLabel>email</FormLabel>
+                                <FormLabel>username</FormLabel>
                                 <FormControl>
                                     <Input
                                         {...field}
-                                        placeholder="email"
-                                        type="email"
+                                        placeholder="username"
+                                        type="text"
                                         required />
                                 </FormControl>
                                 <FormMessage />

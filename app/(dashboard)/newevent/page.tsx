@@ -24,7 +24,7 @@ export default function NewEvent() {
             name: undefined,
             description: undefined,
             duration: 60,
-            cost: 99,
+            regFees: 99,
         }
     })
     const handleSubmit = (values: z.infer<typeof eventSchema>) => {
@@ -79,7 +79,7 @@ export default function NewEvent() {
                         <div className="flex w-full justify-between gap-8">
                             <FormField
                                 control={form.control}
-                                name="cost"
+                                name="regFees"
                                 render={({ field }) => {
                                     return (
                                         <FormItem

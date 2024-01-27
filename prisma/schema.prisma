@@ -10,13 +10,13 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
-  id       Int     @id @default(autoincrement())
-  email    String  @unique
-  username String  @unique
-  name     String?
-  password String
-}
+// model User {
+//   id       Int     @id @default(autoincrement())
+//   email    String  @unique
+//   username String  @unique
+//   name     String?
+//   password String
+// }
 
 model Organizer {
   id       Int     @id @default(autoincrement())
@@ -33,10 +33,12 @@ model Event {
   name             String
   slug             String             @unique
   description      String
-  date             DateTime
-  location         String
+  date             DateTime           @default(now())
+  duration         Int                @default(30)
+  location         String             @default("College")
   Organizer        Organizer?         @relation(fields: [organizerId], references: [id])
   organizerId      Int?
+  regFees          Float              @default(100)
   EventParticipant EventParticipant[]
 }
 
