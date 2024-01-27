@@ -7,6 +7,7 @@ import { useForm } from "react-hook-form"
 import { loginSchema } from "@/lib/zodSchemas"
 import { Button } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
+import { signIn } from "next-auth/react"
 
 
 export default function LoginForm() {
@@ -19,7 +20,13 @@ export default function LoginForm() {
         },
     })
 
-    const handleLogin = () => { }
+    const handleLogin = () => {
+        signIn("credentials", {
+            username: form.getValues("username"),
+            password: form.getValues("password"),
+            callbackUrl: "/",
+        })
+    }
     return (
         <div className="w-2/3">
             <h1 className=" font-bold text-2xl lg:text-3xl">Login</h1>

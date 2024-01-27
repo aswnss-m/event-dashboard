@@ -1,5 +1,7 @@
+// "use client"
 import LoginForm from "./_components/LoginForm";
-export default function Login() {
+
+export default async function Login() {
 
   return (
     <div className="flex w-full h-screen">

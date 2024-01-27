@@ -11,7 +11,7 @@ export const authOptions: NextAuthOptions = {
     },
     providers: [
         CredentialsProvider({
-            name: "Sign in",
+            name: "credentials",
             credentials: {
                 email: { label: "email", type: "email", placeholder: "johndoe@gmail.com" },
                 password: { label: "Password", type: "password" }
@@ -45,6 +45,10 @@ export const authOptions: NextAuthOptions = {
             }
         })
     ],
+    pages: {
+        signIn: 'auth/signIn',
+        signOut: '/',
+    },
     callbacks: {
         session: ({ session, token }) => {
             return {
@@ -65,7 +69,8 @@ export const authOptions: NextAuthOptions = {
             }
             return token
         }
-    }
+    },
+
 }
 
 const handler = NextAuth(authOptions)
