@@ -96,7 +96,7 @@ export default function NewEvent() {
                                                 />
                                             </FormControl>
                                             <FormDescription>
-                                                This is the fees for registration (use '0' for free)
+                                                This is the fees for registration (use &apos;0&apos; for free)
                                             </FormDescription>
                                             <FormMessage className="text-red-500" />
                                         </FormItem>

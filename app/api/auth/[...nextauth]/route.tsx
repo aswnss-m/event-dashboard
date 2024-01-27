@@ -5,7 +5,7 @@ import { NextAuthOptions } from "next-auth";
 import NextAuth from "next-auth/next";
 import CredentialsProvider from "next-auth/providers/credentials";
 
-export const authOptions: NextAuthOptions = {
+const authOptions: NextAuthOptions = {
     pages: {
         signIn: '/auth/signIn',
     },
@@ -19,7 +19,7 @@ export const authOptions: NextAuthOptions = {
                 username: { label: "username", type: "string", placeholder: "johndoe" },
                 password: { label: "Password", type: "password" }
             },
-            async authorize(credentials, req) {
+            async authorize(credentials) {
                 if (!credentials?.username || !credentials?.password) {
                     return null
                 }
@@ -71,5 +71,5 @@ export const authOptions: NextAuthOptions = {
 
 }
 
-const handler = NextAuth(authOptions)
-export { handler as GET, handler as POST }
+const handler = NextAuth(authOptions);
+export { handler as GET, handler as POST };
