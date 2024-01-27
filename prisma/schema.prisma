@@ -17,3 +17,43 @@ model User {
   name     String?
   password String
 }
+
+model Organizer {
+  id       Int     @id @default(autoincrement())
+  name     String
+  username String  @unique
+  password String
+  email    String  @unique
+  phone    String
+  events   Event[]
+}
+
+model Event {
+  id               Int                @id @default(autoincrement())
+  name             String
+  slug             String             @unique
+  description      String
+  date             DateTime
+  location         String
+  Organizer        Organizer?         @relation(fields: [organizerId], references: [id])
+  organizerId      Int?
+  EventParticipant EventParticipant[]
+}
+
+model Participant {
+  id               Int                @id @default(autoincrement())
+  name             String
+  email            String
+  phone            String
+  EventParticipant EventParticipant[]
+}
+
+model EventParticipant {
+  event         Event       @relation(fields: [eventId], references: [id])
+  eventId       Int
+  participant   Participant @relation(fields: [participantId], references: [id])
+  participantId Int
+  assingedAt    DateTime    @default(now())
+
+  @@id([eventId, participantId])
+}
