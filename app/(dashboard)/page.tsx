@@ -3,7 +3,8 @@ import { Card, CardTitle, CardHeader, CardContent, CardDescription } from "@/com
 import Icon from "@/lib/Icon";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-export default function Dashboard() {
+import { getServerAuthSession } from "@/server/auth";
+export default async function Dashboard() {
     const user = {
         orgName: "SSW",
         orgDescription: "SSW is a student run organization",
@@ -51,6 +52,7 @@ export default function Dashboard() {
     ]
     const totalPartipants = events.reduce((acc, event) => acc + event.participants, 0)
     const totalRevenue = events.reduce((x, event) => x + (event.cost * event.participants), 0)
+    const session = await getServerAuthSession()
     return (
         <div className="flex flex-col gap-5">
             <div className="flex justify-between items-center">
